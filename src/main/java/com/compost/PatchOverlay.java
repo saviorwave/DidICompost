@@ -31,6 +31,7 @@ public class PatchOverlay extends Overlay
     private final Client client;
     private final DidICompostPlugin plugin;
     private final DidICompostConfig config;
+    private final String compostType;
 
     public List<WorldPoint> getWorldPoints()
     {
@@ -40,6 +41,16 @@ public class PatchOverlay extends Overlay
     public void setWorldPoints(List<WorldPoint> worldPoints)
     {
         this.worldPoints = worldPoints;
+    }
+    
+    public void setCompostType(String compostType)
+    {
+        this.compostType = compostType;
+    }
+    
+    public String getCompostType()
+    {
+        return compostType;
     }
 
     public List<WorldPoint> worldPoints = new ArrayList<WorldPoint>();
@@ -91,7 +102,8 @@ public class PatchOverlay extends Overlay
             return;
         }
 
-        final BufferedImage img = ImageUtil.loadImageResource(DidICompostPlugin.class, "/Bottomless_compost_bucket.png");
+        String compostImage = "/" + getCompostType() + ".png";
+        final BufferedImage img = ImageUtil.loadImageResource(DidICompostPlugin.class, compostImage);
 
         net.runelite.api.Point point = XYToPoint(worldPoint.getX(),worldPoint.getY(),worldPoint.getPlane());
         graphics.drawImage(img, point.getX() , point.getY(), null);
