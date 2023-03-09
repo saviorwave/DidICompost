@@ -60,10 +60,6 @@ public class DidICompostPlugin extends Plugin
 	private static final Pattern CLEAR_SEAWEED = Pattern.compile("You pick some giant seaweed.*");
 	private static final Pattern CLEAR_MUSHROOM = Pattern.compile("You pick a Bittercap mushroom.*");
 	private static final Pattern CLEAR_NIGHTSHADE = Pattern.compile("You pick some Deadly Nightshade.*");
-	
-
-
-
 
 	private static final ImmutableSet<Integer> COMPOST_ITEMS = ImmutableSet.of(
 			ItemID.COMPOST,
@@ -137,7 +133,6 @@ public class DidICompostPlugin extends Plugin
 						compostType = "compost";
 						break;
 				}
-
 		}
 
 		if(compostType == "ultra" || compostType == "super" || compostType == "compost")
@@ -146,16 +141,16 @@ public class DidICompostPlugin extends Plugin
 		}
 
 		if((matcher = CLEAR_PATCH.matcher(messageString)).matches() ||
-				(matcher = CLEAR_HERB.matcher(messageString)).matches() ||
-				(matcher = CLEAR_TREE.matcher(messageString)).matches() ||
-				(matcher = INSPECT_PATCH_NONE.matcher(messageString)).matches() ||
-				(matcher = CLEAR_ALLOTMENT.matcher(messageString)).matches() ||
-				(matcher = CLEAR_SEAWEED.matcher(messageString)).matches() ||
-				(matcher = CLEAR_MUSHROOM.matcher(messageString)).matches() || 
-				(matcher = CLEAR_NIGHTSHADE.matcher(messageString)).matches()){
-				
-			deletePatch(currentPatch);
-		}
+			(matcher = CLEAR_HERB.matcher(messageString)).matches() ||
+			(matcher = CLEAR_TREE.matcher(messageString)).matches() ||
+			(matcher = INSPECT_PATCH_NONE.matcher(messageString)).matches() ||
+			(matcher = CLEAR_ALLOTMENT.matcher(messageString)).matches() ||
+			(matcher = CLEAR_SEAWEED.matcher(messageString)).matches() ||
+			(matcher = CLEAR_MUSHROOM.matcher(messageString)).matches() || 
+			(matcher = CLEAR_NIGHTSHADE.matcher(messageString)).matches()
+			){
+				deletePatch(currentPatch);
+			}
 
 	}
 
