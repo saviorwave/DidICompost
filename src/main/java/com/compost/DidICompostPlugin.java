@@ -138,7 +138,7 @@ public class DidICompostPlugin extends Plugin
 
 		if(compostType == "ultra" || compostType == "super" || compostType == "compost")
 		{
-			addPatch(currentPatch);
+			addPatch(currentPatch,true);
 		}
 
 		if((matcher = CLEAR_PATCH.matcher(messageString)).matches() ||
@@ -153,7 +153,7 @@ public class DidICompostPlugin extends Plugin
 
 	}
 
-	public void addPatch(int currentPatch)
+	public void addPatch(int currentPatch, boolean saveStatus)
 	{
 		FarmingPatches newPatch = FarmingPatches.fromPatchId(currentPatch);
 
@@ -162,6 +162,10 @@ public class DidICompostPlugin extends Plugin
 			List<WorldPoint> currentTiles = patchOverlay.getWorldPoints();
 			currentTiles.add(newPatch.tile);
 			patchOverlay.setWorldPoints(currentTiles);
+			if(saveStatus == true)
+			{
+				savePatches(newPatch);
+			}
 		}
 	}
 
@@ -179,12 +183,62 @@ public class DidICompostPlugin extends Plugin
 				}
 			}
 			patchOverlay.setWorldPoints(currentTiles);
+			deleteSavedPatch(oldPatch);
 		}
 	}
+	
+	public void savePatches(FarmingPatches newPatch)
+	{
+		//loop through file and see if newPatch.patchId exists.
+		//if exists(){
+			//get the line it exists on, rewrite it to newPatch.patchId, true
+		//}
+		//else{
+			//write to file, newPatch.patchId, true
+		//}
+		
+		//possibly just use RS profiles??
+		//configManager.setRSProfileConfiguration(DidICompost.CONFIG_GROUP, newPatch.patchId + ",true"); ??
+	}
+	
+	public void deleteSavedPatch(FarmingPatches oldPatch)
+	{
+		//loop through file and ensure it contains oldPatch.patchId
+		//if it does(){ 
+		//write oldPatch.patchId,false;
+		//}
+		
+		//possibly just use RS profiles??
+		//configManager.unsetRSProfileConfiguration(DidICompost.CONFIG_GROUP,oldPatch.patchId + ",false"); ??
+	}
+	
+	public void loadPatches()
+	{
+		//load file
+		//if file exists
+		//for lines in file
+		//arr = line.split(",");
+		//arr[0] // patchid
+		//arr[1] // boolean determining compost status.
+		//if(arr[1] == true)
+		//{
+			//addPatch(arr[0], false);
+		//}
+		
+		//else create it!
+		
+		//or if using config?
+		
+		//something something = configManager.getRSProfileConfiguration(DidICompost.CONFIG_GROUP);
+		//for each in something
+		//savePatch(something??); 
+	}
+	
 	@Override
 	protected void startUp() throws Exception
 	{
 		overlayManager.add(patchOverlay);
+		loadPatches();
 	}
 
 	@Override
