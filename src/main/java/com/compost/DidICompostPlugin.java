@@ -58,6 +58,10 @@ public class DidICompostPlugin extends Plugin
 	private static final Pattern CLEAR_TREE = Pattern.compile("You examine the tree for signs of disease and find that it is in perfect health.*");
 	private static final Pattern CLEAR_ALLOTMENT = Pattern.compile("The allotment is now empty.*");
 	private static final Pattern CLEAR_SEAWEED = Pattern.compile("You pick some giant seaweed.*");
+	private static final Pattern CLEAR_MUSHROOM = Pattern.compile("You pick a Bittercap mushroom.*");
+	private static final Pattern CLEAR_NIGHTSHADE = Pattern.compile("You pick some Deadly Nightshade.*");
+	
+
 
 
 
@@ -138,7 +142,7 @@ public class DidICompostPlugin extends Plugin
 
 		if(compostType == "ultra" || compostType == "super" || compostType == "compost")
 		{
-			addPatch(currentPatch,true);
+			addPatch(currentPatch,compostType,true);
 		}
 
 		if((matcher = CLEAR_PATCH.matcher(messageString)).matches() ||
@@ -146,14 +150,16 @@ public class DidICompostPlugin extends Plugin
 				(matcher = CLEAR_TREE.matcher(messageString)).matches() ||
 				(matcher = INSPECT_PATCH_NONE.matcher(messageString)).matches() ||
 				(matcher = CLEAR_ALLOTMENT.matcher(messageString)).matches() ||
-				(matcher = CLEAR_SEAWEED.matcher(messageString)).matches()){
-
+				(matcher = CLEAR_SEAWEED.matcher(messageString)).matches() ||
+				(matcher = CLEAR_MUSHROOM.matcher(messageString)).matches() || 
+				(matcher = CLEAR_NIGHTSHADE.matcher(messageString)).matches()){
+				
 			deletePatch(currentPatch);
 		}
 
 	}
 
-	public void addPatch(int currentPatch, boolean saveStatus)
+	public void addPatch(int currentPatch, String compostType, boolean saveStatus)
 	{
 		FarmingPatches newPatch = FarmingPatches.fromPatchId(currentPatch);
 
@@ -161,6 +167,7 @@ public class DidICompostPlugin extends Plugin
 		{
 			List<WorldPoint> currentTiles = patchOverlay.getWorldPoints();
 			currentTiles.add(newPatch.tile);
+			patchOverlay.setCompostType(compostType);
 			patchOverlay.setWorldPoints(currentTiles);
 			if(saveStatus == true)
 			{
